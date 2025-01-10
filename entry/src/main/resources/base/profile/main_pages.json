@@ -1,6 +1,7 @@
 {
   "src": [
     "pages/Index",
-    "pages/WeChat"
+    "pages/WeChat",
+    "pages/ContactPage"
   ]
 }

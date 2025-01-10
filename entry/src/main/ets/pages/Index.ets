@@ -1,4 +1,5 @@
 import { TabBarCommen } from '../module/Tabs';
+import { ContactPage } from './ContactPage';
 import { WeChat } from './WeChat';
 
 @Entry
@@ -49,6 +50,8 @@ struct Index {
       ForEach(this.tabList, (item: TabBarCommen) => {
         TabContent() {
           if (item.name == "wechat") {
+            ContactPage()
+          } else  if (item.name == "联系人") {
             WeChat()
           } else {
             Text('首页的内容').fontSize(30)
