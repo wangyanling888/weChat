@@ -1,16 +1,34 @@
 import { DefaultUserList, UserInfo } from '../module/users';
+import { router } from '@kit.ArkUI';
 
 @Entry
 @Component
 export struct ContactPage {
   @State message: string = 'Contact';
-  @State searchValue: string = ''
-  @State listUser: UserInfo[] = DefaultUserList
+  @State
+  @Watch("filterName")
+  searchValue: string = ''
+  @State
+  listUser: UserInfo[] = []
+
+  aboutToAppear(): void {
+    this.listUser = DefaultUserList
+  }
+
+  filterName() {
+    this.listUser = DefaultUserList.filter((userInfo: UserInfo) => {
+      return userInfo.username.includes(this.searchValue)
+    })
+  }
 
   build() {
     Column() {
       Row() {
-        Search({ placeholder: "搜索", value: $$this.searchValue })
+        Search({ placeholder: "搜索", value: $$this.searchValue }).borderRadius(4).height(30)
+        //   .onSubmit((value: string) => {
+        //   AlertDialog.show({ message: this.searchValue })
+        //   this.searchValue = value
+        // })
       }.width('100%').padding({ left: 10, right: 10 }).margin({ left: 10, right: 10 })
 
 
@@ -32,6 +50,8 @@ export struct ContactPage {
             pressed: {
               .backgroundColor($r("app.color.back_color"))
             }
+          }).onClick(() => {
+            router.pushUrl({ url: 'pages/chatDetail/ChatDetailPage', params: item })
           })
         })
       }
